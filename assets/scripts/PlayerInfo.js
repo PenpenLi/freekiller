@@ -13,6 +13,11 @@ cc.Class({
         buff1: cc.ProgressBar,
         // buff2: cc.ProgressBar,
         triangle: cc.Node,
+
+        radius: 20,
+
+        // 每帧移动多少像素
+        speed: 1,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -20,7 +25,7 @@ cc.Class({
     // onLoad () {},
 
     start () {
-
+        this.buff1.node.active = false;
     },
 
     // update (dt) {},

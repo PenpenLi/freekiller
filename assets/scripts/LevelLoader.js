@@ -60,9 +60,11 @@ cc.Class({
         var x = config.x - center.x;
         var y = config.y - center.y;
 
+        // cc.log("config", config.x, config.y);
+
         this.player.position = cc.v2(x, y);
-        // cc.log('zz', config.x, config.y);
-        // cc.log('pos:', this.tiledmap.node.width, this.tiledmap.node.height);
+        // this.player.position = cc.v2(8,8);
+        cc.log("player:", this.player.position.toString());
 
         this.displayLayer.addUserNode(this.player);
     },
