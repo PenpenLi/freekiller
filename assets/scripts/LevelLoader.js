@@ -67,6 +67,8 @@ cc.Class({
         cc.log("player:", this.player.position.toString());
 
         this.displayLayer.addUserNode(this.player);
+
+        
     },
 
     onSlide(slider){

@@ -14,7 +14,11 @@ cc.Class({
         // buff2: cc.ProgressBar,
         triangle: cc.Node,
 
-        radius: 20,
+        radius: {
+            serializable: false,
+            visible: false,
+            default: 16,
+        },
 
         // 每帧移动多少像素
         speed: 1,

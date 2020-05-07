@@ -4,6 +4,7 @@ cc.Class({
 
     properties: {
         debugLabel: cc.Label,
+        debugLabel2: cc.Label,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -35,6 +36,9 @@ cc.Class({
         this.tilesize = this.displayLayer.getMapTileSize();
         this.mapsize = levelLoader.tiledmap.node.getContentSize();
 
+        cc.log(`tilesize=(${this.tilesize.width}, ${this.tilesize.height})`);
+        cc.log(`mapsize=(${this.mapsize.width}, ${this.mapsize.height})`);
+
         this.displayLayer.node.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
         this.displayLayer.node.on(cc.Node.EventType.MOUSE_MOVE, this.onMouseMove, this);
     },
@@ -60,86 +64,64 @@ cc.Class({
         pos.x += this.mapsize.width/2;
         pos.y += this.mapsize.height/2;
 
-        pos.y = this.mapsize.height - pos.y;
-
         var r = Math.floor(pos.y / this.tilesize.height);
         var c = Math.floor(pos.x / this.tilesize.width);
+
+        // pos.y = this.mapsize.height - pos.y;
+        var totalr = this.mapsize.height/this.tilesize.height;
+
+        if (totalr != Math.floor(totalr)) {
+            cc.error('mapsize和tilesize不匹配');
+        }
+
+        r = (totalr-1) - r;
+        
         return {r:r, c:c};
     },
 
-    getPossibleTiles(cur, s)
-    {
-        var s_tile_count = Math.floor(s.len() / this.tilesize.width)+1;
-        var ret = [];
-        if(s.x<0)
-        {
-            for(var i=0; i<s_tile_count; ++i)
-            {
-                ret.push({r:cur.r-1, c:cur.c-2-i});
-                ret.push({r:cur.r, c:cur.c-2-i});
-                ret.push({r:cur.r+1, c:cur.c-2-i});
-            }
-        }
-        else if (s.x >0) 
-        {
-            for(var i=0; i<s_tile_count; ++i)
-            {
-                ret.push({r:cur.r-1, c:cur.c+2+i});
-                ret.push({r:cur.r, c:cur.c+2+i});
-                ret.push({r:cur.r+1, c:cur.c+2+i});
-            }
-        }
-        else if (s.y < 0)
-        {
-            for(var i=0; i<s_tile_count; ++i)
-            {
-                ret.push({r:cur.r+2+i, c:cur.c-1});
-                ret.push({r:cur.r+2+i, c:cur.c});
-                ret.push({r:cur.r+2+i, c:cur.c+1});
-            }
-        }
-        else if (s.y > 0)
-        {
-            for(var i=0; i<s_tile_count; ++i)
-            {
-                ret.push({r:cur.r-2-i, c:cur.c-1});
-                ret.push({r:cur.r-2-i, c:cur.c});
-                ret.push({r:cur.r-2-i, c:cur.c+1});
-            }
-        }
-        return ret;
-    },
-
-    calcYOnCircle(origin, radius, x)
+    calcYOnCircleMax(origin, radius, x)
     {
         return Math.sqrt(radius*radius-(x-origin.x)*(x-origin.x))+origin.y;
     },
-    calcXOnCircle(origin, radius, y)
+    calcYOnCircleMin(origin, radius, x)
+    {
+        return -Math.sqrt(radius*radius-(x-origin.x)*(x-origin.x))+origin.y;
+    },
+    calcXOnCircleMax(origin, radius, y)
     {
         return Math.sqrt(radius*radius-(y-origin.y)*(y-origin.y))+origin.x;
     },
-    onDebug()
+    calcXOnCircleMin(origin, radius, y)
     {
-        var t = this.calcMaxCanGo(this.player.position, cc.v2(1, 0));
-        if (t) {
-            var s = cc.v2(t, 0);
-            this.player.position = this.player.position.add(s);
-            this.debugLabel.string = s;
-        }
-        else
-        {
-            this.player.position = this.player.position.add(cc.v2(1,0));
-
-        }
-
-
-
-
-        // this.debugLabel.string = this.calcXOnCircle(cc.v2(1,1), 1, 0)+" "+
-        // this.calcXOnCircle(cc.v2(1,1), 1, 1)+" "+
-        // this.calcXOnCircle(cc.v2(1,1), 1, 0.5)+" "+
-        // this.calcXOnCircle(cc.v2(1,1), 1, -0.5);
+        return -Math.sqrt(radius*radius-(y-origin.y)*(y-origin.y))+origin.x;
     },
+
+    onDebugUp()
+    {
+        var t = this.calcMaxCanGoToUp(this.player.position);
+        var s = cc.v2(0, t);
+        this.player.position = this.player.position.add(s);
+    },
+    onDebugDown()
+    {
+        var t = this.calcMaxCanGoToDown(this.player.position);
+        var s = cc.v2(0, t);
+        this.player.position = this.player.position.add(s);
+    },
+    onDebugLeft()
+    {
+        var t = this.calcMaxCanGoToLeft(this.player.position);
+        var s = cc.v2(t, 0);
+        this.player.position = this.player.position.add(s);
+    },
+    onDebugRight()
+    {
+        var t = this.calcMaxCanGoToRight(this.player.position);
+        var s = cc.v2(t, 0);
+        this.player.position = this.player.position.add(s);
+    },
+
+
     rcBounding(rc)
     {
         return new cc.Rect(rc.c*this.tilesize.width - this.mapsize.width/2, 
@@ -147,139 +129,264 @@ cc.Class({
             this.tilesize.width,
             this.tilesize.height);
     },
-    calcMaxCanGo(cur, s)
+
+    isValidRC(rc)
     {
-        var currc = this.positionToRC(cur);
-        cc.log("cur", cur.x, cur.y);
-        cc.log("currc", currc.r, currc.c);
-        var tiles = this.getPossibleTiles(currc, s);
+        var totalr = this.mapsize.height/this.tilesize.height;
+        var totalc = this.mapsize.width/this.tilesize.width;
+        return rc.r>=0 && rc.r<totalr && rc.c>=0 && rc.c<totalc;
+    },
 
-        var r = this.playerInfo.radius;
+    calcMaxCanGoToLeft(curpos)
+    {
+        var currc = this.positionToRC(curpos);
+        var radius = this.playerInfo.radius;
 
-        if (tiles.length <3) {
-            cc.error("error", tiles.length);
-            return 0;
+        if (curpos.x%this.tilesize.width===0) {
+            currc.c -= 1;
         }
 
-        cc.log("tiles[0]", tiles[0].r, tiles[0].c, this.displayLayer.getTileGIDAt(tiles[0].c, tiles[0].r));
-        cc.log("tiles[1]", tiles[1].r, tiles[1].c, this.displayLayer.getTileGIDAt(tiles[1].c, tiles[1].r));
-        cc.log("tiles[2]", tiles[2].r, tiles[2].c, this.displayLayer.getTileGIDAt(tiles[2].c, tiles[2].r));
+        // cc.log(`left:pos=(${curpos.x},${curpos.y});rc=(${currc.r},${currc.c})`);
 
-        if(s.x<0)
-        {
-            var ret = [];
+        var ret = [];
 
-            // cc.log("cur", cur.x, cur.y);
+        var tile = {r:currc.r-1, c:currc.c-2};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var x = this.calcXOnCircleMin(curpos, radius, bound.yMin);
+            ret.push(bound.xMax-x);
+            // cc.log('left[0]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
 
-            if (this.displayLayer.getTileGIDAt(tiles[0].c, tiles[0].r)>0) {
-                var bound = this.rcBounding(tiles[0]);
-                var x = this.calcXOnCircle(cur, r, bound.yMin);
-                ret.push(bound.xMax-x);
-            }
+        var tile = {r:currc.r-1, c:currc.c-1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var x = this.calcXOnCircleMin(curpos, radius, bound.yMin);
+            ret.push(bound.xMax-x);
+            // cc.log('left[1]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
 
-            if (this.displayLayer.getTileGIDAt(tiles[1].c, tiles[1].r)>0) {
-                var bound = this.rcBounding(tiles[1]);
-                // cc.log("1bound", bound.xMax, cur.x, r);
-                ret.push(bound.xMax-(cur.x-r));
-            }
+        var tile = {r:currc.r, c:currc.c-2};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            ret.push(bound.xMax-(curpos.x-radius));
+            // cc.log('left[2]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
 
-            if (this.displayLayer.getTileGIDAt(tiles[2].c, tiles[2].r)>0) {
-                var bound = this.rcBounding(tiles[2]);
-                var x = this.calcXOnCircle(cur, r, bound.yMax);
-                ret.push(bound.xMax-x);
-            }
+        var tile = {r:currc.r, c:currc.c-1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            ret.push(bound.xMax-(curpos.x-radius));
+            // cc.log('left[3]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
 
-            // cc.log("ret[0]", ret[0]);
-            // cc.log("ret[1]", ret[1]);
-            // cc.log("ret[2]", ret[2]);
+        var tile = {r:currc.r+1, c:currc.c-2};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var x = this.calcXOnCircleMin(curpos, radius, bound.yMax);
+            ret.push(bound.xMax-x);
+            // cc.log('left[4]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
 
+        var tile = {r:currc.r+1, c:currc.c-1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var x = this.calcXOnCircleMin(curpos, radius, bound.yMax);
+            ret.push(bound.xMax-x);
+            // cc.log('left[5]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
 
-            if (ret.length === 0)
-                return null;
-
-
+        if (ret.length===0) {
+            return -this.tilesize.width;
+        }
+        else {
             return Math.max.apply(null, ret);
         }
-        else if (s.x >0) 
-        {
-            var ret = [];
+    },
 
-            if (this.displayLayer.getTileGIDAt(tiles[0].c, tiles[0].r)>0) {
-                var bound = this.rcBounding(tiles[0]);
-                var x = this.calcXOnCircle(cur, r, bound.yMin);
-                ret.push(bound.xMin-x);
-            }
+    calcMaxCanGoToRight(curpos)
+    {
+        var currc = this.positionToRC(curpos);
+        var radius = this.playerInfo.radius;
 
-            if (this.displayLayer.getTileGIDAt(tiles[1].c, tiles[1].r)>0) {
-                var bound = this.rcBounding(tiles[1]);
-                ret.push(bound.xMin-(cur.x+r));
-            }
+        // cc.log(`right:pos=(${curpos.x},${curpos.y});rc=(${currc.r},${currc.c})`);
 
-            if (this.displayLayer.getTileGIDAt(tiles[2].c, tiles[2].r)>0) {
-                var bound = this.rcBounding(tiles[2]);
-                var x = this.calcXOnCircle(cur, r, bound.yMax);
-                ret.push(bound.xMin-x);
-            }
+        var ret = [];
 
-            if (ret.length === 0)
-                return null;
+        var tile = {r:currc.r-1, c:currc.c+2};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var x = this.calcXOnCircleMax(curpos, radius, bound.yMin);
+            ret.push(bound.xMin-x);
+            // cc.log('right[0]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
 
+        var tile = {r:currc.r-1, c:currc.c+1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var x = this.calcXOnCircleMax(curpos, radius, bound.yMin);
+            ret.push(bound.xMin-x);
+            // cc.log('right[1]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
+
+        var tile = {r:currc.r, c:currc.c+2};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            ret.push(bound.xMin-(curpos.x+radius));
+            // cc.log('calcMaxCanGoToRight[1]', ret[ret.length-1]);
+        }
+
+        var tile = {r:currc.r, c:currc.c+1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            ret.push(bound.xMin-(curpos.x+radius));
+            // cc.log('calcMaxCanGoToRight[1]', ret[ret.length-1]);
+        }
+
+        var tile = {r:currc.r+1, c:currc.c+2};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var x = this.calcXOnCircleMax(curpos, radius, bound.yMax);
+            ret.push(bound.xMin-x);
+            // cc.log('calcMaxCanGoToRight[2]', ret[ret.length-1]);
+        }
+
+        var tile = {r:currc.r+1, c:currc.c+1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var x = this.calcXOnCircleMax(curpos, radius, bound.yMax);
+            ret.push(bound.xMin-x);
+            // cc.log('calcMaxCanGoToRight[2]', ret[ret.length-1]);
+        }
+
+        if (ret.length===0) {
+            return this.tilesize.width;
+        }
+        else {
             return Math.min.apply(null, ret);
         }
-        else if (s.y < 0)
-        {
-            var ret = [];
+    },
 
-            if (this.displayLayer.getTileGIDAt(tiles[0].c, tiles[0].r)>0) {
-                var bound = this.rcBounding(tiles[0]);
-                var y = this.calcYOnCircle(cur, r, bound.xMax);
-                ret.push(bound.yMax-y);
-            }
+    calcMaxCanGoToDown(curpos)
+    {
+        var currc = this.positionToRC(curpos);
+        var radius = this.playerInfo.radius;
 
-            if (this.displayLayer.getTileGIDAt(tiles[1].c, tiles[1].r)>0) {
-                var bound = this.rcBounding(tiles[1]);
-                ret.push(bound.yMax-(cur.y-r));
-            }
+        if (curpos.y%this.tilesize.height===0) {
+            currc.r += 1;
+        }
 
-            if (this.displayLayer.getTileGIDAt(tiles[2].c, tiles[2].r)>0) {
-                var bound = this.rcBounding(tiles[2]);
-                var y = this.calcYOnCircle(cur, r, bound.xMin);
-                ret.push(bound.yMax-y);
-            }
+        var debug = false;
 
-            cc.log("ret[0]", ret[0]);
-            cc.log("ret[1]", ret[1]);
-            cc.log("ret[2]", ret[2]);
+        var ret = [];
 
-            if (ret.length === 0)
-                return null;
+        var tile = {r:currc.r+2, c:currc.c-1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var y = this.calcYOnCircleMin(curpos, radius, bound.xMax);
+            ret.push(bound.yMax-y);
+            debug && cc.log('down[0]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
 
+        var tile = {r:currc.r+1, c:currc.c-1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var y = this.calcYOnCircleMin(curpos, radius, bound.xMax);
+            ret.push(bound.yMax-y);
+            debug && cc.log('down[1]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
+
+        var tile = {r:currc.r+2, c:currc.c};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            ret.push(bound.yMax-(curpos.y-radius));
+            debug && cc.log('down[2]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
+
+        var tile = {r:currc.r+1, c:currc.c};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            ret.push(bound.yMax-(curpos.y-radius));
+            debug && cc.log('down[3]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
+
+        var tile = {r:currc.r+2, c:currc.c+1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var y = this.calcYOnCircleMin(curpos, radius, bound.xMin);
+            ret.push(bound.yMax-y);
+            debug && cc.log('down[4]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
+
+        var tile = {r:currc.r+1, c:currc.c+1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var y = this.calcYOnCircleMin(curpos, radius, bound.xMin);
+            ret.push(bound.yMax-y);
+            debug && cc.log('down[5]', `tile=(${tile.r},${tile.c})`, ret[ret.length-1]);
+        }
+
+        if (ret.length===0) {
+            return -this.tilesize.height;
+        }
+        else {
             return Math.max.apply(null, ret);
         }
-        else if (s.y > 0)
-        {
-            var ret = [];
+    },
 
-            if (this.displayLayer.getTileGIDAt(tiles[0].c, tiles[0].r)>0) {
-                var bound = this.rcBounding(tiles[0]);
-                var y = this.calcYOnCircle(cur, r, bound.xMax);
-                ret.push(bound.yMin-y);
-            }
+    calcMaxCanGoToUp(curpos)
+    {
+        var currc = this.positionToRC(curpos);
+        var radius = this.playerInfo.radius;
 
-            if (this.displayLayer.getTileGIDAt(tiles[1].c, tiles[1].r)>0) {
-                var bound = this.rcBounding(tiles[1]);
-                ret.push(bound.yMin-(cur.y-r));
-            }
+        cc.log('up:', `currc=(${currc.r},${currc.c})`)
 
-            if (this.displayLayer.getTileGIDAt(tiles[2].c, tiles[2].r)>0) {
-                var bound = this.rcBounding(tiles[2]);
-                var y = this.calcYOnCircle(cur, r, bound.xMin);
-                ret.push(bound.yMin-y);
-            }
+        var ret = [];
 
-            if (ret.length === 0)
-                return null;
+        var tile = {r:currc.r-2, c:currc.c-1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var y = this.calcYOnCircleMax(curpos, radius, bound.xMax);
+            ret.push(bound.yMin-y);
+        }
 
+        var tile = {r:currc.r-1, c:currc.c-1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var y = this.calcYOnCircleMax(curpos, radius, bound.xMax);
+            ret.push(bound.yMin-y);
+        }
+
+        var tile = {r:currc.r-2, c:currc.c};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            ret.push(bound.yMin-(curpos.y+radius));
+        }
+
+        var tile = {r:currc.r-1, c:currc.c};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            ret.push(bound.yMin-(curpos.y+radius));
+        }
+
+        var tile = {r:currc.r-2, c:currc.c+1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var y = this.calcYOnCircleMax(curpos, radius, bound.xMin);
+            ret.push(bound.yMin-y);
+        }
+
+        var tile = {r:currc.r-1, c:currc.c+1};
+        if (this.isValidRC(tile) && this.displayLayer.getTileGIDAt(tile.c, tile.r)>0) {
+            var bound = this.rcBounding(tile);
+            var y = this.calcYOnCircleMax(curpos, radius, bound.xMin);
+            ret.push(bound.yMin-y);
+        }
+
+        if (ret.length===0) {
+            return this.tilesize.height;
+        }
+        else {
             return Math.min.apply(null, ret);
         }
     },
@@ -296,30 +403,30 @@ cc.Class({
 
         if (dir.x<0)
         {
-            var xlimit = this.calcMaxCanGo(this.player.position, cc.v2(-1, 0));
-            if (xlimit && s.x < xlimit) {
+            var xlimit = this.calcMaxCanGoToLeft(this.player.position);
+            if (s.x < xlimit) {
                 s.x = xlimit;
             }
         }
         else if (dir.x>0)
         {
-            xlimit = this.calcMaxCanGo(this.player.position, cc.v2(1, 0));
-            if (xlimit && s.x > xlimit) {
+            var xlimit = this.calcMaxCanGoToRight(this.player.position);
+            if (s.x > xlimit) {
                 s.x = xlimit;
             }
         }
 
         if (dir.y<0) 
         {
-            var ylimit = this.calcMaxCanGo(this.player.position, cc.v2(0, -1));
-            if (ylimit && s.y < ylimit) {
+            var ylimit = this.calcMaxCanGoToDown(this.player.position);
+            if (s.y < ylimit) {
                 s.y = ylimit;
             }
         }
         else if (dir.y>0)
         {
-            ylimit = this.calcMaxCanGo(this.player.position, cc.v2(0, 1));
-            if (ylimit && s.y > ylimit) {
+            var ylimit = this.calcMaxCanGoToUp(this.player.position);
+            if (s.y > ylimit) {
                 s.y = ylimit;
             }
         }
@@ -329,6 +436,12 @@ cc.Class({
 
     update(dt)
     {
+        if (!this.player) {
+            return;
+        }
+        var rc = this.positionToRC(this.player.position);
+        this.debugLabel2.string = `pos=${this.player.position.toString()},rc=(${rc.r},${rc.c})`;
+
         var step = cc.v2(0,0);
         if (this.keys.indexOf(cc.macro.KEY.w)>=0) {
             step.y += 1;
@@ -349,5 +462,6 @@ cc.Class({
         }
 
         this.checkMove(step);
+
     },
 });
