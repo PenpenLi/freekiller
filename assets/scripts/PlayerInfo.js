@@ -14,6 +14,9 @@ cc.Class({
         // buff2: cc.ProgressBar,
         triangle: cc.Node,
 
+        // 主武器的挂点
+        mainWeaponHanging: cc.Node,
+
         radius: {
             serializable: false,
             visible: false,
@@ -29,7 +32,15 @@ cc.Class({
     // onLoad () {},
 
     start () {
+        cc.log('PlayerInfo start');
+
         this.buff1.node.active = false;
+
+        // this.weaponman = this.getComponent('WeaponMan');
+    },
+
+    weaponman() {
+        return this.getComponent('WeaponMan');
     },
 
     // update (dt) {},

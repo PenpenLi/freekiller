@@ -1,15 +1,13 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+// 负责关卡数据的读取
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
+        // 当关卡改变时，向外界发出通知
         onLevelChanged: cc.Component.EventHandler,
+
+        handgun: cc.Prefab,
     },
 
     curLevel: 0,
@@ -25,4 +23,19 @@ cc.Class({
 
         this.onLevelChanged.emit([this]);
     },
+
+    onLevelLoaded(levelLoader) {
+        // 加载角色武器
+        // 
+        var playerInfo = levelLoader.player.getComponent('PlayerInfo');
+        var weaponman = playerInfo.weaponman();
+
+        var weaponnode = cc.instantiate(this.handgun);
+        weaponnode.parent = playerInfo.mainWeaponHanging;
+
+        var gun = weaponnode.addComponent('HandGun');
+        gun.init();
+        weaponman.addWeapon(gun);
+    },
+
 });

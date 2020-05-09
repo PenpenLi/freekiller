@@ -1,9 +1,4 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+// 负责加载tmx地图、player
 
 cc.Class({
     extends: cc.Component,
@@ -71,9 +66,4 @@ cc.Class({
         
     },
 
-    onSlide(slider){
-        cc.log("pre", this.progress2.progress);
-        this.progress2.progress = slider.progress;
-        cc.log("after", this.progress2.progress);
-    },
 });

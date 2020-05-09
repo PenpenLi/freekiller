@@ -23,21 +23,11 @@ cc.Class({
 
         this.playerInfo.triangle.angle = -step.signAngle(cc.v2(0,1)) * 180 / 3.14;
 
-        if (!this.lastShootTime) {
-            this.lastShootTime = 0;
+    	var shootdir = step.normalize();
+    	if (step.len()<0.33) {
+            // 取得瞄准方向
         }
 
-        var shootDiff = 1000;
-
-        if (Date.now() - this.lastShootTime < shootDiff)
-            return;
-
-        this.lastShootTime = Date.now();
-
-    	var incenter = step.len()<0.33;
-    	if (!incenter) {
-        }
-
-
+        this.playerInfo.weaponman().checkShoot(shootdir);
     },
 });
