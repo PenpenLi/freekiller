@@ -9,25 +9,17 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        weapons: [],
+        dir: cc.Vec2,
+        speed: 1,
     },
 
     start () {
-        // this.weapons = [];
+        this.node.getComponent('Bullet').onBulletUpdate = this.onBulletUpdate.bind(this);
     },
 
-    // addMainWeapon(weapon) {
-
-    // },
-
-    addWeapon(weapon) {
-        this.weapons.push(weapon);
-    },
-
-    checkShoot(shootdir){
-        for(var i=0; i<this.weapons.length; ++i)
-        {
-            this.weapons[i].checkShoot(shootdir);
-        }
+    onBulletUpdate(dt) {
+    	var step = this.dir.mul(this.speed);
+        this.node.position = this.node.position.add(step);
+        this.node.angle = -step.signAngle(cc.v2(0, 1)) * 180 / 3.14;
     },
 });

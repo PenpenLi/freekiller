@@ -25,17 +25,9 @@ cc.Class({
     },
 
     onLevelLoaded(levelLoader) {
-        // 加载角色武器
-        // 
-        var playerInfo = levelLoader.player.getComponent('PlayerInfo');
-        var weaponman = playerInfo.weaponman();
-
+        var weaponman = levelLoader.player.getComponent('WeaponMan');
         var weaponnode = cc.instantiate(this.handgun);
-        weaponnode.parent = playerInfo.mainWeaponHanging;
-
-        var gun = weaponnode.addComponent('HandGun');
-        gun.init();
-        weaponman.addWeapon(gun);
+        weaponman.addMainWeaponNode(weaponnode);
     },
 
 });

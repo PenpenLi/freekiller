@@ -499,7 +499,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "mainWeaponHanging",
+    "_name": "mainHangingNode",
     "_objFlags": 0,
     "_parent": {
       "__id__": 12
@@ -533,7 +533,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        19.412,
+        25.027,
         0,
         0,
         0,
@@ -643,6 +643,9 @@
     },
     "_enabled": true,
     "weapons": [],
+    "mainHangingNode": {
+      "__id__": 13
+    },
     "_id": ""
   },
   {
