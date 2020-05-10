@@ -149,7 +149,7 @@
   },
   {
     "__type__": "cc.Sprite",
-    "_name": "",
+    "_name": "sprite<Sprite>",
     "_objFlags": 0,
     "node": {
       "__id__": 2
@@ -221,8 +221,12 @@
       "__id__": 1
     },
     "_enabled": true,
+    "shootDiff": 200,
     "bulletPrefab": {
       "__uuid__": "428af605-6a7f-4967-83b7-ee13b8fb6962"
+    },
+    "shootSound": {
+      "__uuid__": "49c71a64-845a-49a3-b920-215f05c46142"
     },
     "onShootTriggered": {
       "__id__": 8

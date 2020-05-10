@@ -28,6 +28,9 @@ cc.Class({
         var weaponman = levelLoader.player.getComponent('WeaponMan');
         var weaponnode = cc.instantiate(this.handgun);
         weaponman.addMainWeaponNode(weaponnode);
+
+        var diffshoot = weaponnode.getComponent('Weapon_DiffShoot');
+        diffshoot.shootDiff = 800;
     },
 
 });

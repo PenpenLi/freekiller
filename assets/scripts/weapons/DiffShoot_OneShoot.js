@@ -10,14 +10,16 @@ cc.Class({
 
     start () {
         this.weapon = this.node.getComponent('Weapon');
-        this.diffShootWeapon = this.node.getComponent('DiffShootWeapon');
+        this.diffshoot = this.node.getComponent('Weapon_DiffShoot');
     },
 
     onShootTriggered(shootdir) {
-        var bulletNode = cc.instantiate(this.diffShootWeapon.bulletPrefab);
+        var bulletNode = cc.instantiate(this.diffshoot.bulletPrefab);
         bulletNode.position = this.node.convertToWorldSpaceAR(cc.v2(0,0));
         bulletNode.getComponent('LineMove').dir = shootdir;
         bulletNode.getComponent('LineMove').speed = 2;
         this.weapon.bulletMan.addBulletNode(bulletNode);
+
+        cc.audioEngine.playEffect(this.diffshoot.shootSound, false);
     }
 });
