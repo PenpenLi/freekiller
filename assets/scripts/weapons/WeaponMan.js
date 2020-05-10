@@ -1,10 +1,10 @@
 // 挂在可以添加武器的Node上
+// 负责武器挂点、武器生命周期的管理
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        weapons: [],
 
         // 主武器挂点
         mainHangingNode: cc.Node,
@@ -13,7 +13,10 @@ cc.Class({
         // sideHangingNodes: [cc.Node],
     },
 
-    start () {
+    ctor()
+    {
+        this.weapons = [];
+        this.shootDir = cc.v2(0, 1);
     },
 
     addMainWeaponNode(node)
@@ -22,11 +25,16 @@ cc.Class({
         if (!weapon)
             return;
 
+        weapon.init(this);
+
         node.parent = this.mainHangingNode;
         this.weapons.push(weapon);
     },
 
     checkShoot(shootdir){
+
+        this.shootDir = shootdir;
+
         for(var i=0; i<this.weapons.length; ++i)
         {
             this.weapons[i].checkShoot(shootdir);

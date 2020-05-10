@@ -1,9 +1,5 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+// 使player永远居中于屏幕中心，但不会超出tilemap范围
+// 挂在任意位置
 
 cc.Class({
     extends: cc.Component,

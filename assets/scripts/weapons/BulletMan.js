@@ -17,10 +17,10 @@ cc.Class({
     },
 
     addBulletNode(node) {
-        helper.moveNodeTo(node, this.node);
-
         var b = node.getComponent('Bullet');
         b.init(this);
+
+        helper.moveNodeTo(node, this.node);
 
         this.bullets.push(b);
     },

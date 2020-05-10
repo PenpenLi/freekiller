@@ -18,7 +18,7 @@ cc.Class({
         this.onLevelChanged.emit([this]);
 
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        // cc.director.getCollisionManager().enabledDebugDraw = true;
     },
 
     gotoNext() {
@@ -32,8 +32,8 @@ cc.Class({
         var weaponnode = cc.instantiate(this.handgun);
         weaponman.addMainWeaponNode(weaponnode);
 
-        var diffshoot = weaponnode.getComponent('Weapon_DiffShoot');
-        diffshoot.shootDiff = 200;
+        // var diffshoot = weaponnode.getComponent('DiffShootEmitter');
+        // diffshoot.shootDiff = 200;
     },
 
 });

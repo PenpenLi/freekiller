@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "handgun",
+    "_name": "akgun",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -185,9 +185,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "4a48edb8-7ad7-4e41-95d0-c8f5e2ddbbe6"
+      "__uuid__": "da0fc167-900a-46ef-9bb6-f0105af98a69"
     },
-    "fileId": "48z3MSdv9Gxpjt6Bpe4yGl",
+    "fileId": "f2aGwSjV9FbabOlEjOr6Ro",
     "sync": false
   },
   {
@@ -221,7 +221,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "shootDiff": 500,
+    "shootDiff": 1000,
     "onShootTriggered": {
       "__id__": 8
     },
@@ -233,12 +233,12 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "7438cITdHdPhZmR7og95YkX",
+    "_componentId": "c27d8OIFYRDwqsXzEReOWtH",
     "handler": "onShootTriggered",
     "customEventData": ""
   },
   {
-    "__type__": "7438cITdHdPhZmR7og95YkX",
+    "__type__": "c27d8OIFYRDwqsXzEReOWtH",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -246,11 +246,12 @@
     },
     "_enabled": true,
     "bulletPrefab": {
-      "__uuid__": "428af605-6a7f-4967-83b7-ee13b8fb6962"
+      "__uuid__": "61fef3a8-12c1-4f17-ae1b-5a6b537cb5fb"
     },
     "shootSound": {
       "__uuid__": "49c71a64-845a-49a3-b920-215f05c46142"
     },
+    "bulletCount": 3,
     "_id": ""
   },
   {
@@ -259,9 +260,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "4a48edb8-7ad7-4e41-95d0-c8f5e2ddbbe6"
+      "__uuid__": "da0fc167-900a-46ef-9bb6-f0105af98a69"
     },
-    "fileId": "cabpR3v1NLPbGLTsihB+v1",
+    "fileId": "56EHmcJF1IWIjzUVUnL1cy",
     "sync": false
   }
 ]

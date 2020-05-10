@@ -14,9 +14,6 @@ cc.Class({
         // buff2: cc.ProgressBar,
         triangle: cc.Node,
 
-        // 主武器的挂点
-        mainWeaponHanging: cc.Node,
-
         radius: {
             serializable: false,
             visible: false,
@@ -24,7 +21,10 @@ cc.Class({
         },
 
         // 每帧移动多少像素
-        speed: 1,
+        speed: {
+            default: 1,
+            visible: false,
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:

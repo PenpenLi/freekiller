@@ -16,16 +16,12 @@ cc.Class({
 
     // onLoad () {},
 
-    init (bulletManager) {
-        this.bulletManager = bulletManager;
+    init (bulletMan) {
+        this.bulletMan = bulletMan;
     },
 
     bulletUpdate(dt) {
         this.onBulletUpdate && this.onBulletUpdate.emit([dt]);
     },
 
-    onCollisionEnter: function (other, self) {
-        cc.log('remove bullet', self.tag, other.tag);
-        this.bulletManager.removeBulletNode(this.node);
-    },
 });

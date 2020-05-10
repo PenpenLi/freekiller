@@ -11,7 +11,6 @@ cc.Class({
         playerPrefab: cc.Prefab,
 
         onLevelLoaded: [cc.Component.EventHandler],
-
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -19,7 +18,6 @@ cc.Class({
     // onLoad () {},
 
     start () {
-        this.cnt = 0;
     },
 
     onLevelChanged(levelMan) {
@@ -72,11 +70,9 @@ cc.Class({
 
         this.player.position = cc.v2(x, y);
         // this.player.position = cc.v2(8,8);
-        cc.log("player:", this.player.position.toString());
+        // cc.log("player:", this.player.position.toString());
 
         this.displayLayer.addUserNode(this.player);
-
-        
     },
 
 
@@ -91,8 +87,6 @@ cc.Class({
             var box = layer.addComponent(cc.BoxCollider);
             box.size = new cc.Size(config.width, config.height);
             box.offset = cc.v2(config.x-center.x+config.width/2, config.y-center.y-config.height/2);
-            box.tag = 1;
-            ++this.cnt;
         }
     },
 

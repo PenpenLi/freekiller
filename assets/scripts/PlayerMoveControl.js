@@ -3,8 +3,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        debugLabel: cc.Label,
-        debugLabel2: cc.Label,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -39,22 +37,8 @@ cc.Class({
         cc.log(`tilesize=(${this.tilesize.width}, ${this.tilesize.height})`);
         cc.log(`mapsize=(${this.mapsize.width}, ${this.mapsize.height})`);
 
-        this.displayLayer.node.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
-        this.displayLayer.node.on(cc.Node.EventType.MOUSE_MOVE, this.onMouseMove, this);
-    },
-
-    onMouseMove(event) {
-        var pos = this.displayLayer.node.convertToNodeSpaceAR(event.getLocation());
-        var rc = this.positionToRC(pos);
-        var bound = this.rcBounding(rc);
-        // this.debugLabel.string = `bound=${bound.xMin}, ${bound.yMin}, ${bound.xMax}, ${bound.yMax}`;
-    },
-
-    onMouseDown(event) {
-        var pos = this.displayLayer.node.convertToNodeSpaceAR(event.getLocation());
-        var rc = this.positionToRC(pos);
-        var bound = this.rcBounding(rc);
-        this.debugLabel.string = `rc=(${rc.r},${rc.c}),bound=${bound.xMin}, ${bound.yMin}, ${bound.xMax}, ${bound.yMax}`;
+        // this.displayLayer.node.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
+        // this.displayLayer.node.on(cc.Node.EventType.MOUSE_MOVE, this.onMouseMove, this);
     },
 
     positionToRC(pos)
@@ -95,32 +79,6 @@ cc.Class({
     {
         return -Math.sqrt(radius*radius-(y-origin.y)*(y-origin.y))+origin.x;
     },
-
-    onDebugUp()
-    {
-        var t = this.calcMaxCanGoToUp(this.player.position);
-        var s = cc.v2(0, t);
-        this.player.position = this.player.position.add(s);
-    },
-    onDebugDown()
-    {
-        var t = this.calcMaxCanGoToDown(this.player.position);
-        var s = cc.v2(0, t);
-        this.player.position = this.player.position.add(s);
-    },
-    onDebugLeft()
-    {
-        var t = this.calcMaxCanGoToLeft(this.player.position);
-        var s = cc.v2(t, 0);
-        this.player.position = this.player.position.add(s);
-    },
-    onDebugRight()
-    {
-        var t = this.calcMaxCanGoToRight(this.player.position);
-        var s = cc.v2(t, 0);
-        this.player.position = this.player.position.add(s);
-    },
-
 
     rcBounding(rc)
     {
@@ -440,7 +398,6 @@ cc.Class({
             return;
         }
         var rc = this.positionToRC(this.player.position);
-        this.debugLabel2.string = `pos=${this.player.position.toString()},rc=(${rc.r},${rc.c})`;
 
         var step = cc.v2(0,0);
         if (this.keys.indexOf(cc.macro.KEY.w)>=0) {

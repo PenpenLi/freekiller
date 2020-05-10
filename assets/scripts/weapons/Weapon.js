@@ -11,7 +11,11 @@ cc.Class({
     },
 
     start() {
-        this.bulletMan = cc.find('Canvas/bulletLayer').getComponent('BulletMan');
+    },
+
+    init(weaponMan)
+    {
+        this.weaponMan = weaponMan;
     },
 
     checkShoot(shootdir) {
