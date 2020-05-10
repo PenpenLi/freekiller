@@ -339,7 +339,7 @@ cc.Class({
         var currc = this.positionToRC(curpos);
         var radius = this.playerInfo.radius;
 
-        cc.log('up:', `currc=(${currc.r},${currc.c})`)
+        // cc.log('up:', `currc=(${currc.r},${currc.c})`)
 
         var ret = [];
 

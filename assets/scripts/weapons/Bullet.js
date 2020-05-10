@@ -8,18 +8,24 @@ cc.Class({
 
         // 每帧的回调函数
         // 外部通过设置此变量来hack每帧回调
-        onBulletUpdate: null,
+        onBulletUpdate: cc.Component.EventHandler,
+
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
 
-    start () {
-
+    init (bulletManager) {
+        this.bulletManager = bulletManager;
     },
 
     bulletUpdate(dt) {
-        this.onBulletUpdate && this.onBulletUpdate(dt);
+        this.onBulletUpdate && this.onBulletUpdate.emit([dt]);
+    },
+
+    onCollisionEnter: function (other, self) {
+        cc.log('remove bullet', self.tag, other.tag);
+        this.bulletManager.removeBulletNode(this.node);
     },
 });

@@ -20,6 +20,6 @@ cc.Class({
         bulletNode.getComponent('LineMove').speed = 2;
         this.weapon.bulletMan.addBulletNode(bulletNode);
 
-        cc.audioEngine.playEffect(this.diffshoot.shootSound, false);
+        helper.playEffect(this.diffshoot.shootSound);
     }
 });

@@ -19,6 +19,7 @@ cc.Class({
     // onLoad () {},
 
     start () {
+        this.cnt = 0;
     },
 
     onLevelChanged(levelMan) {
@@ -32,8 +33,20 @@ cc.Class({
             var objects = this.tiledmap.getObjectGroup('object').getObjects();
             for(var i=0; i<objects.length; ++i)
             {
-                if (objects[i].name === "player") {
-                    this.reloadPlayer(objects[i]);
+                if (!objects[i].name) {
+                    cc.warn('没有配置对象名称');
+                    continue;
+                }
+
+                var types = objects[i].name.split('.');
+                if (types[0] === "player") {
+                    this.loadPlayer(objects[i]);
+                }
+                else if (types[0] === "wall") {
+                    this.loadWall(objects[i]);
+                }
+                else {
+                    cc.warn('未知的碰撞类型:', types[0]);
                 }
             }
 
@@ -44,7 +57,7 @@ cc.Class({
         });
     },
 
-    reloadPlayer(config)
+    loadPlayer(config)
     {
         this.player = cc.instantiate(this.playerPrefab);
 
@@ -64,6 +77,23 @@ cc.Class({
         this.displayLayer.addUserNode(this.player);
 
         
+    },
+
+
+
+    loadWall(config)
+    {
+        var center = cc.v2(this.tiledmap.node.width/2, this.tiledmap.node.height/2);
+        var layer = this.tiledmap.getObjectGroup('object');
+        var types = config.name.split('.');
+        if (types[1] === 'square')
+        {
+            var box = layer.addComponent(cc.BoxCollider);
+            box.size = new cc.Size(config.width, config.height);
+            box.offset = cc.v2(config.x-center.x+config.width/2, config.y-center.y-config.height/2);
+            box.tag = 1;
+            ++this.cnt;
+        }
     },
 
 });

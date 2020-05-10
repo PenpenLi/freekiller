@@ -20,8 +20,20 @@ cc.Class({
         helper.moveNodeTo(node, this.node);
 
         var b = node.getComponent('Bullet');
+        b.init(this);
 
         this.bullets.push(b);
+    },
+
+    removeBulletNode(node)
+    {
+        this.node.removeChild(node);
+
+        var b = node.getComponent('Bullet');
+        var index = this.bullets.indexOf(b);
+        if (index>=0) {
+            this.bullets.splice(index, 1);
+        }
     },
 
     update (dt) {

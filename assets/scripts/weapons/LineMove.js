@@ -14,7 +14,7 @@ cc.Class({
     },
 
     start () {
-        this.node.getComponent('Bullet').onBulletUpdate = this.onBulletUpdate.bind(this);
+        
     },
 
     onBulletUpdate(dt) {

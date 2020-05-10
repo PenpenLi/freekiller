@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="11">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="26">
  <tileset firstgid="1" source="default.tsx"/>
  <layer id="1" name="display" width="60" height="40">
   <data encoding="csv">
@@ -49,5 +49,15 @@
   <object id="10" name="player" x="632" y="86">
    <point/>
   </object>
+  <object id="11" name="wall.square" x="0" y="1" width="961" height="13"/>
+  <object id="12" name="wall.square" x="0" y="0" width="30" height="639"/>
+  <object id="16" name="wall.square" x="2" y="622" width="957" height="16"/>
+  <object id="17" name="wall.square" x="927" y="1" width="32" height="637"/>
+  <object id="19" name="wall.square" x="240" y="80" width="31" height="349"/>
+  <object id="20" name="wall.square" x="271" y="224" width="223" height="13"/>
+  <object id="21" name="wall.square" x="272" y="351" width="238" height="14"/>
+  <object id="22" name="wall.square" x="463" y="144" width="31" height="92"/>
+  <object id="23" name="wall.square" x="462" y="144" width="127" height="15"/>
+  <object id="24" name="wall.square" x="561" y="144" width="30" height="78"/>
  </objectgroup>
 </map>
