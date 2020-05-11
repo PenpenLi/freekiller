@@ -26,6 +26,17 @@ class Helper
 			cc.log(k, '=', obj[k]);
 		}
 	}
+
+	create(classname)
+	{
+		var constructor = require(classname);
+
+		if (!constructor) {
+			cc.log('找不到', classname);
+		}
+
+		return constructor ? new constructor() : null;
+	}
 }
 
 window.helper = new Helper();
