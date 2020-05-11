@@ -72,7 +72,9 @@ cc.Class({
         // this.player.position = cc.v2(8,8);
         // cc.log("player:", this.player.position.toString());
 
-        this.displayLayer.addUserNode(this.player);
+        // 由于creator的bug，此方法会导致player在某些区域显示不出来
+        // this.displayLayer.addUserNode(this.player);
+        this.player.parent = this.displayLayer.node;
     },
 
 
