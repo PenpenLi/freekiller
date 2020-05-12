@@ -1,7 +1,8 @@
 {
   "group-list": [
     "default",
-    "PlayerBullet"
+    "PlayerBullet",
+    "Enermy"
   ],
   "collision-matrix": [
     [
@@ -9,6 +10,12 @@
       true
     ],
     [
+      true,
+      false,
+      true
+    ],
+    [
+      false,
       true,
       false
     ]

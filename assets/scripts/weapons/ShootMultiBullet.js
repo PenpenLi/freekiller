@@ -17,7 +17,7 @@ cc.Class({
     },
 
     start () {
-        this.canvasInfo = cc.find('Canvas').getComponent('CanvasInfo');
+        this.bulletMan = cc.find('Canvas').getComponent('BulletMan');
         this.weapon = this.node.getComponent('Weapon');
     },
 
@@ -29,9 +29,9 @@ cc.Class({
         var bulletNode = cc.instantiate(this.bulletPrefab);
 
         bulletNode.position = this.node.convertToWorldSpaceAR(cc.v2(0,0));
-        bulletNode.getComponent('LineMove').dir = this.weapon.weaponMan.shootDir;
+        bulletNode.getComponent('Bullet').setInitDir(this.weapon.man.shootDir);
 
-        this.canvasInfo.getBulletMan().addBulletNode(bulletNode);
+        this.bulletMan.addBulletNode(bulletNode);
 
         helper.playEffect(this.shootSound);
     },

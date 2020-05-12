@@ -30,6 +30,9 @@
         "__id__": 6
       },
       {
+        "__id__": 7
+      },
+      {
         "__id__": 8
       },
       {
@@ -37,7 +40,7 @@
       }
     ],
     "_prefab": {
-      "__id__": 10
+      "__id__": 12
     },
     "_opacity": 255,
     "_color": {
@@ -194,45 +197,6 @@
     "sync": false
   },
   {
-    "__type__": "3a3289vt69BIJbtr/6KnqZU",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "dir": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "speed": 3,
-    "_id": ""
-  },
-  {
-    "__type__": "d9093NpFG1OQaP2+cp2ynQd",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "onBulletUpdate": {
-      "__id__": 7
-    },
-    "_id": ""
-  },
-  {
-    "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
-    "component": "",
-    "_componentId": "3a3289vt69BIJbtr/6KnqZU",
-    "handler": "onBulletUpdate",
-    "customEventData": ""
-  },
-  {
     "__type__": "cc.BoxCollider",
     "_name": "",
     "_objFlags": 0,
@@ -262,6 +226,73 @@
     },
     "_enabled": true,
     "_id": ""
+  },
+  {
+    "__type__": "3a3289vt69BIJbtr/6KnqZU",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "dir": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "speed": 3,
+    "_id": ""
+  },
+  {
+    "__type__": "12008PYPNpDuJr2mAa4bP5B",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "damage": 10,
+    "_id": ""
+  },
+  {
+    "__type__": "d9093NpFG1OQaP2+cp2ynQd",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "onBulletUpdate": [
+      {
+        "__id__": 10
+      }
+    ],
+    "onSetInitDir": [
+      {
+        "__id__": 11
+      }
+    ],
+    "_id": ""
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 1
+    },
+    "component": "",
+    "_componentId": "3a3289vt69BIJbtr/6KnqZU",
+    "handler": "checkMove",
+    "customEventData": ""
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 1
+    },
+    "component": "",
+    "_componentId": "3a3289vt69BIJbtr/6KnqZU",
+    "handler": "setInitDir",
+    "customEventData": ""
   },
   {
     "__type__": "cc.PrefabInfo",

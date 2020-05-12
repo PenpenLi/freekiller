@@ -18,6 +18,7 @@ cc.Class({
     // onLoad () {},
 
     start () {
+        
     },
 
     onLevelChanged(levelMan) {

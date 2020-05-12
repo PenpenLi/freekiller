@@ -1,24 +1,25 @@
-// 挂在武器Node上，且必须是第一个节点
-// 要求bulletMan必须存在
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-
-        // 每次发射的回调
-        onCheckShoot: cc.Component.EventHandler,
+        onCheckShoot: [cc.Component.EventHandler],
     },
 
-    start() {
-    },
-
-    init(weaponMan)
+    start()
     {
-        this.weaponMan = weaponMan;
     },
 
-    checkShoot(shootdir) {
-        this.onCheckShoot && this.onCheckShoot.emit([shootdir]);
+    setWeaponMan(man)
+    {
+        this.man = man;
+    },
+
+    checkShoot(shootdir)
+    {
+        for(let i=0; i<this.onCheckShoot.length; ++i)
+        {
+            this.onCheckShoot[i].emit([shootdir]);
+        }
     },
 });

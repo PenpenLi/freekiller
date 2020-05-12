@@ -66,7 +66,7 @@
 </data>
  </layer>
  <objectgroup id="4" name="object">
-  <object id="10" name="player" x="632" y="86">
+  <object id="10" name="player" x="733.333" y="182">
    <point/>
   </object>
   <object id="11" name="wall.square" x="0" y="1" width="1437" height="13"/>

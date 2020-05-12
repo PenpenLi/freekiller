@@ -11,7 +11,7 @@ cc.Class({
     // onLoad () {},
 
     start () {
-        this.bulletMan = this.node.getComponent('Bullet').bulletMan;
+        this.bulletMan = this.node.getComponent('Bullet').man;
     },
 
     onCollisionEnter: function (other, self) {

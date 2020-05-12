@@ -1,16 +1,16 @@
 // 控制bullet的生命周期
-// 应该附加在bulletLayer上
 
 cc.Class({
     extends: cc.Component,
 
-    properties: {
-        bullets: [],
+    ctor()
+    {
+        this.bullets = [];
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
+    properties: {
+        bulletLayer: cc.Node,
+    },
 
     start () {
 
@@ -18,16 +18,16 @@ cc.Class({
 
     addBulletNode(node) {
         var b = node.getComponent('Bullet');
-        b.init(this);
+        b.setBulletMan(this);
 
-        helper.moveNodeTo(node, this.node);
+        helper.moveNodeTo(node, this.bulletLayer);
 
         this.bullets.push(b);
     },
 
     removeBulletNode(node)
     {
-        this.node.removeChild(node);
+        this.bulletLayer.removeChild(node);
 
         var b = node.getComponent('Bullet');
         var index = this.bullets.indexOf(b);

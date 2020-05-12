@@ -25,7 +25,7 @@ cc.Class({
         if (!weapon)
             return;
 
-        weapon.init(this);
+        weapon.setWeaponMan(this);
 
         node.parent = this.mainHangingNode;
         this.weapons.push(weapon);

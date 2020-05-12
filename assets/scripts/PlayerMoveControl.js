@@ -389,7 +389,10 @@ cc.Class({
             }
         }
 
+        // cc.log('player move', s.len());
+
         this.player.position = this.player.position.add(s);
+
     },
 
     update(dt)

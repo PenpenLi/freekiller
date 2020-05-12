@@ -1,42 +1,44 @@
 // 管理所有敌人的生命周期
-// 必须挂在enermyLayer上
 
 cc.Class({
     extends: cc.Component,
 
     ctor(){
-        this.enermys = [];
     },
 
     properties: {
-        
+        enermyLayer: cc.Node,
     },
 
-    addEnermyNode(enermyNode)
+    addEnermyNode(node)
     {
-        var b = node.getComponent('Enermy');
-        b.init(this);
+        helper.moveNodeTo(node, this.enermyLayer);
 
-        helper.moveNodeTo(node, this.node);
-
-        this.enermys.push(b);
-    },
-
-    removeenermyNode(node)
-    {
-        this.node.removeChild(node);
-
-        var b = node.getComponent('Enermy');
-        var index = this.enermys.indexOf(b);
-        if (index>=0) {
-            this.enermys.splice(index, 1);
+        let comps = node.getComponents(cc.Component);
+        for(let i=0; i<comps.length; ++i)
+        {
+            comps[i].setEnermyMan && comps[i].setEnermyMan(this);
         }
     },
 
+    removeEnermyNode(node)
+    {
+        this.enermyLayer.removeChild(node, true);
+    },
+
     update(dt) {
-        for(let i=0; i<this.enermys.length; ++i)
+        for(let i=0; i<this.enermyLayer.children.length; ++i)
         {
-            this.enermys[i].enermyUpdate(dt);
+            this.updateOneEnermy(this.enermyLayer.children[i], dt);
+        }
+    },
+
+    updateOneEnermy(node, dt)
+    {
+        let comps = node.getComponents(cc.Component);
+        for(let i=0; i<comps.length; ++i)
+        {
+            comps[i].enermyUpdate && comps[i].enermyUpdate(dt);
         }
     },
 });

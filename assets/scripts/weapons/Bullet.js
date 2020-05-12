@@ -1,27 +1,36 @@
 // 提供给BulletMan使用的对象
-// 每个子弹都应该挂上这个脚本，只有挂上这个脚本的node才能添加到BulletMan中。
+// 不应该直接使用此脚本，应该继承这个脚本并重写方法
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-
-        // 每帧的回调函数
-        // 外部通过设置此变量来hack每帧回调
-        onBulletUpdate: cc.Component.EventHandler,
-
+        onBulletUpdate: [cc.Component.EventHandler],
+        onSetInitDir: [cc.Component.EventHandler],
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
 
-    init (bulletMan) {
-        this.bulletMan = bulletMan;
+    setBulletMan(man) {
+        this.man = man;
     },
 
-    bulletUpdate(dt) {
-        this.onBulletUpdate && this.onBulletUpdate.emit([dt]);
+    setInitDir(dir)
+    {
+        for(let i=0; i<this.onSetInitDir.length; ++i)
+        {
+            this.onSetInitDir[i].emit([dir]);
+        }
+    },
+
+    bulletUpdate(dt)
+    {
+        for(let i=0; i<this.onBulletUpdate.length; ++i)
+        {
+            this.onBulletUpdate[i].emit([dt]);
+        }
     },
 
 });

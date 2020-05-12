@@ -5,13 +5,13 @@ window.db = {
 			type: "SequenceGenner",
 			config: [
 				{
-					type: "MovableEnermyGenner",
+					type: "NormalEnermyGenner",
 					config: {
 						names: ['en3'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
 					},
-					totalCount: 4,
+					totalCount: 1,
 				},
 			],
 			
@@ -20,7 +20,7 @@ window.db = {
 			type: "SequenceGenner",
 			config: [
 				{
-					type: "MovableEnermyGenner",
+					type: "NormalEnermyGenner",
 					config: {
 						names: ['en4'],
 						bloodAddRange: [0, 100],
@@ -32,7 +32,7 @@ window.db = {
 					type: "WaitZeroEnermy",
 				},
 				{
-					type: "MovableEnermyGenner",
+					type: "NormalEnermyGenner",
 					config: {
 						names: ['en4'],
 						bloodAddRange: [0, 100],
@@ -46,7 +46,7 @@ window.db = {
 			type: "SequenceGenner",
 			config: [
 				{
-					type: "MovableEnermyGenner",
+					type: "NormalEnermyGenner",
 					config: {
 						names: ['en33'],
 						bloodAddRange: [0, 100],
@@ -61,7 +61,7 @@ window.db = {
 					}
 				},
 				{
-					type: "MovableEnermyGenner",
+					type: "NormalEnermyGenner",
 					config: {
 						names: ['en44'],
 						bloodAddRange: [0, 100],
@@ -76,7 +76,7 @@ window.db = {
 					}
 				},
 				{
-					type: "MovableEnermyGenner",
+					type: "NormalEnermyGenner",
 					config: {
 						names: ['en33'],
 						bloodAddRange: [0, 100],
@@ -91,7 +91,7 @@ window.db = {
 					}
 				},
 				{
-					type: "MovableEnermyGenner",
+					type: "NormalEnermyGenner",
 					config: {
 						names: ['en44'],
 						bloodAddRange: [0, 100],
@@ -107,7 +107,7 @@ window.db = {
 		type: "SequenceGenner",
 		config: [
 			{
-				type: "MovableEnermyGenner",
+				type: "NormalEnermyGenner",
 				config: {
 					names: ['en33'],
 					bloodAddRange: [0, 100],
@@ -122,7 +122,7 @@ window.db = {
 				}
 			},
 			{
-				type: "MovableEnermyGenner",
+				type: "NormalEnermyGenner",
 				config: {
 					names: ['en44'],
 					bloodAddRange: [0, 100],
@@ -137,7 +137,7 @@ window.db = {
 				}
 			},
 			{
-				type: "MovableEnermyGenner",
+				type: "NormalEnermyGenner",
 				config: {
 					names: ['en33'],
 					bloodAddRange: [0, 100],
@@ -152,7 +152,7 @@ window.db = {
 				}
 			},
 			{
-				type: "MovableEnermyGenner",
+				type: "NormalEnermyGenner",
 				config: {
 					names: ['en44'],
 					bloodAddRange: [0, 100],

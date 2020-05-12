@@ -16,14 +16,16 @@ cc.Class({
     },
 
     start () {
-        this.canvasInfo = cc.find('Canvas').getComponent('CanvasInfo');
+        this.bulletMan = cc.find('Canvas').getComponent('BulletMan');
     },
 
     onShootTriggered(shootdir) {
         var bulletNode = cc.instantiate(this.bulletPrefab);
+
         bulletNode.position = this.node.convertToWorldSpaceAR(cc.v2(0,0));
-        bulletNode.getComponent('LineMove').dir = shootdir;
-        this.canvasInfo.getBulletMan().addBulletNode(bulletNode);
+        bulletNode.getComponent('Bullet').setInitDir(shootdir);
+
+        this.bulletMan.addBulletNode(bulletNode);
 
         helper.playEffect(this.shootSound);
     },

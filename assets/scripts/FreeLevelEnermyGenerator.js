@@ -9,8 +9,6 @@ cc.Class({
 
     onLevelLoaded(levelLoader)
     {
-     //    var canvasInfo = cc.find('Canvas').getComponent('CanvasInfo');
-    	// this.enermyMan = canvasInfo.getEnermyMan();
     	this.freeLevelMan = cc.find('Canvas').getComponent('FreeLevelMan');
 
     	var rule = db.freeEnermyGeneratorRules[this.freeLevelMan.curLevel] || db.freeEnermyGeneratorDefaultRule;

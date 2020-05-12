@@ -7,7 +7,7 @@ cc.Class({
         // 当关卡改变时，向外界发出通知
         onLevelChanged: cc.Component.EventHandler,
 
-        handgun: cc.Prefab,
+        debugGun: cc.Prefab,
     },
 
     curLevel: 0,
@@ -29,7 +29,7 @@ cc.Class({
 
     onLevelLoaded(levelLoader) {
         var weaponman = levelLoader.player.getComponent('WeaponMan');
-        var weaponnode = cc.instantiate(this.handgun);
+        var weaponnode = cc.instantiate(this.debugGun);
         weaponman.addMainWeaponNode(weaponnode);
 
         // var diffshoot = weaponnode.getComponent('DiffShootEmitter');

@@ -9,11 +9,12 @@ cc.Class({
         speed: cc.Integer,
     },
 
-    start () {
-        
+    setInitDir(dir)
+    {
+        this.dir = dir;
     },
 
-    onBulletUpdate(dt) {
+    checkMove(dt) {
     	var step = this.dir.mul(this.speed);
         this.node.position = this.node.position.add(step);
         this.node.angle = -step.signAngle(cc.v2(0, 1)) * 180 / 3.14;

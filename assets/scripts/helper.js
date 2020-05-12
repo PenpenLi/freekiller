@@ -4,6 +4,7 @@ class Helper
 	constructor()
 	{
 		this.sound = true;
+		this.rescache = {};
 	}
 
 	moveNodeTo(node, newParent)
@@ -36,6 +37,31 @@ class Helper
 		}
 
 		return constructor ? new constructor() : null;
+	}
+
+	randSelect(arr)
+	{
+		if (arr.length===0)
+			return null;
+		if (arr.length===1)
+			return arr[0];
+		var index = this.randInt([0, arr.length]);
+		return arr[index];
+	}
+
+	randInt(min, max)
+	{
+		if (min instanceof Array) {
+			max = min[1];
+			min = min[0];
+		}
+
+		if (min === max)
+			return min;
+
+		var rand = Math.random();
+		rand = rand * (max - min);
+		return Math.round(min+rand);
 	}
 }
 

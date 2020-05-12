@@ -22,7 +22,7 @@ class SequenceGenner
         var res = this.runningGenner.gennerUpdate(dt);
 
         if (res) {
-            this.runningGenner.exit();
+            this.runningGenner.onExit && this.runningGenner.onExit();
             this.runningGenner = null;
         }
 
