@@ -43,7 +43,7 @@ cc.Class({
             return;
 
         if (!this.player) {
-            this.player = cc.find('Canvas').getComponent('LevelLoader').player;
+            this.player = cc.find('Canvas').getComponent('LevelMan').getPlayerNode();
         }
 
         if (!this.player)

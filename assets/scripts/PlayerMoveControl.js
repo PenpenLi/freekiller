@@ -26,13 +26,13 @@ cc.Class({
         }, this);
     },
 
-    onLevelLoaded(levelLoader) {
-        this.player = levelLoader.player;
-        this.displayLayer = levelLoader.displayLayer;
+    onLevelLoaded(levelman) {
+        this.player = levelman.getPlayerNode();
+        this.displayLayer = levelman.getMapNode().getComponent(cc.TiledMap).getLayer('display');
         this.playerInfo = this.player.getComponent('PlayerInfo');
 
         this.tilesize = this.displayLayer.getMapTileSize();
-        this.mapsize = levelLoader.tiledmap.node.getContentSize();
+        this.mapsize = levelman.getMapNode().getContentSize();
 
         // cc.log(`tilesize=(${this.tilesize.width}, ${this.tilesize.height})`);
         // cc.log(`mapsize=(${this.mapsize.width}, ${this.mapsize.height})`);

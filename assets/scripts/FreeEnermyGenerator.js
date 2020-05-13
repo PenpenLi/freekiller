@@ -7,11 +7,9 @@ cc.Class({
         
     },
 
-    onLevelLoaded(levelLoader)
+    onLevelLoaded(levelman)
     {
-    	this.freeLevelMan = cc.find('Canvas').getComponent('FreeLevelMan');
-
-    	var rule = db.freeEnermyGeneratorRules[this.freeLevelMan.curLevel] || db.freeEnermyGeneratorDefaultRule;
+    	var rule = db.freeEnermyGeneratorRules[levelman.getCurLevel()] || db.freeEnermyGeneratorDefaultRule;
     	this.rootGenner = helper.create(rule.type);
     	this.rootGenner.init(rule.config);
     },

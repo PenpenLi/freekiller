@@ -5,8 +5,8 @@ cc.Class({
     properties: {
     },
 
-    onLevelLoaded(levelLoader) {
-        this.playerInfo = levelLoader.player.getComponent('PlayerInfo');
+    onLevelLoaded(levelman) {
+        this.playerInfo = levelman.getPlayerNode().getComponent('PlayerInfo');
         this.enermyMan = cc.find('Canvas').getComponent('EnermyMan');
     },
 

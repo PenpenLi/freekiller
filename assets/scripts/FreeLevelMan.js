@@ -5,7 +5,11 @@ cc.Class({
 
     properties: {
         // 当关卡改变时，向外界发出通知
-        onLevelChanged: cc.Component.EventHandler,
+        onLevelLoaded: [cc.Component.EventHandler],
+
+        playerNode: cc.Node,
+
+        tiledmapNode: cc.Node,
 
         debugGun: cc.Prefab,
     },
@@ -15,7 +19,7 @@ cc.Class({
     start () {
         this.curLevel = 0;
         
-        this.onLevelChanged.emit([this]);
+        this.emitLevelLoaded();
 
         cc.director.getCollisionManager().enabled = true;
         // cc.director.getCollisionManager().enabledDebugDraw = true;
@@ -24,12 +28,37 @@ cc.Class({
     gotoNext() {
         ++this.curLevel;
 
-        this.onLevelChanged.emit([this]);
+        this.emitLevelLoaded();
     },
 
-    onLevelLoaded(levelLoader) {
-        var weaponman = levelLoader.player.getComponent('WeaponMan');
+    loadPlayerWeapon() {
+        var weaponman = this.playerNode.getComponent('WeaponMan');
         var weaponnode = cc.instantiate(this.debugGun);
         weaponman.addMainWeaponNode(weaponnode);
     },
+
+    emitLevelLoaded()
+    {
+        this.loadPlayerWeapon();
+        
+        for(let i=0; i<this.onLevelLoaded.length; ++i)
+        {
+            this.onLevelLoaded[i].emit([this]);
+        }
+    },
+
+    getPlayerNode()
+    {
+        return this.playerNode;
+    },
+
+    getMapNode()
+    {
+        return this.tiledmapNode;
+    },
+
+    getCurLevel()
+    {
+        return this.curLevel;
+    }
 });

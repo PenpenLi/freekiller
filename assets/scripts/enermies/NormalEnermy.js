@@ -12,7 +12,7 @@ cc.Class({
 
     start()
     {
-    	this.player = cc.find('Canvas').getComponent('LevelLoader').player;
+    	this.player = cc.find('Canvas').getComponent('LevelMan').getPlayerNode();
         this.label.string = this.blood;
     },
 
