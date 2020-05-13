@@ -13,6 +13,11 @@ class WaitSecond
 
     	return this.curTime>=this.config.second;
     }
+
+    getTotalEnermy()
+    {
+        return 0;
+    }
 }
 
 module.exports = WaitSecond;

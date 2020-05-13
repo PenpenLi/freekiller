@@ -3,8 +3,18 @@ class SequenceGenner
 {
     init(config)
     {
-        this.config = config;
-        this.runningIndex = 0;
+        this.runningIndex = -1;
+
+        this.gens = [];
+        for(let i=0; i<config.length; ++i)
+        {
+            var genconfig = config[i];
+
+            var gen = helper.create(genconfig.type);
+            gen.init(genconfig.config);
+
+            this.gens.push(gen);
+        }
     }
 
     // 返回true代表运行完成
@@ -12,7 +22,7 @@ class SequenceGenner
     gennerUpdate(dt)
     {
         if (!this.runningGenner) {
-            this.runningGenner = this.createGenner();
+            this.runningGenner = this.beginNextGenner();
         }
 
         if (!this.runningGenner) {
@@ -29,18 +39,25 @@ class SequenceGenner
         return false;
     }
 
-    createGenner()
+    beginNextGenner()
     {
-        if (this.runningIndex >= this.config.length) {
-            return null;
-        }
+        ++this.runningIndex;
 
-        var genconfig = this.config[this.runningIndex];
-        this.runningIndex++;
+        var gen = this.gens[this.runningIndex];
 
-        var gen = helper.create(genconfig.type);
-        gen.init(genconfig.config);
+        gen && gen.onEnter && gen.onEnter();
+
         return gen;
+    }
+
+    getTotalEnermy()
+    {
+        var total = 0;
+        for(let i=0; i<this.gens.length; ++i)
+        {
+            total += this.gens[i].getTotalEnermy();
+        }
+        return total;
     }
 }
 

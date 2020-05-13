@@ -6,7 +6,10 @@ class NormalEnermyGenner
         this.config = config;
 
         this.totalCount = this.config.totalCount || 1;
+    }
 
+    onEnter()
+    {
         var names = [];
         for(let i=0; i<this.config.names.length; ++i)
         {
@@ -46,6 +49,11 @@ class NormalEnermyGenner
         }
 
         return true;
+    }
+
+    getTotalEnermy()
+    {
+        return this.totalCount;
     }
 }
 

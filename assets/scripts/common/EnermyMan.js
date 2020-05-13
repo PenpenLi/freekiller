@@ -4,6 +4,7 @@ cc.Class({
     extends: cc.Component,
 
     ctor(){
+        this.deadCount = 0;
     },
 
     properties: {
@@ -23,6 +24,7 @@ cc.Class({
 
     removeEnermyNode(node)
     {
+        ++this.deadCount;
         this.enermyLayer.removeChild(node, true);
     },
 
@@ -50,5 +52,10 @@ cc.Class({
     getNearestNodeAtWorld()
     {
         return this.enermyLayer.children[0];
+    },
+
+    getDeadCount()
+    {
+        return this.deadCount;
     },
 });

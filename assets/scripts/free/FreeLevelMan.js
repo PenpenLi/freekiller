@@ -60,5 +60,15 @@ cc.Class({
     getCurLevel()
     {
         return this.curLevel;
-    }
+    },
+
+    getEnermyGenner()
+    {
+        return this.node.getComponent('FreeEnermyGenner');
+    },
+
+    getEnermyMan()
+    {
+        return this.node.getComponent('EnermyMan');
+    },
 });

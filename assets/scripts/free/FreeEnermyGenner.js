@@ -26,4 +26,9 @@ cc.Class({
             this.node.removeComponent(this);
         }
     },
+
+    getTotalEnermy()
+    {
+        return this.rootGenner.getTotalEnermy();
+    },
 });

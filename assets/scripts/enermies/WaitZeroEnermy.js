@@ -13,6 +13,11 @@ class WaitZeroEnermy
 
     	return true;
     }
+
+    getTotalEnermy()
+    {
+        return 0;
+    }
 }
 
 module.exports = WaitZeroEnermy;
