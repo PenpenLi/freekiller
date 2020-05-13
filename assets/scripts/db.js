@@ -10,8 +10,26 @@ window.db = {
 						names: ['en3'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
+						totalCount: 2,
 					},
-					totalCount: 1,
+				},
+				{
+					type: "WaitZeroEnermy",
+				},
+				{
+					type: "WaitSecond",
+					config: {
+						second: 2,
+					}
+				},
+				{
+					type: "NormalEnermyGenner",
+					config: {
+						names: ['en4'],
+						bloodAddRange: [0, 100],
+						speedAddRange: [0, 0],
+						totalCount: 2,
+					},
 				},
 			],
 			
@@ -25,8 +43,8 @@ window.db = {
 						names: ['en4'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
+						totalCount: 4,
 					},
-					totalCount: 4,
 				},
 				{
 					type: "WaitZeroEnermy",
@@ -37,8 +55,8 @@ window.db = {
 						names: ['en4'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
+						totalCount: 8,
 					},
-					totalCount: 8,
 				},
 			],
 		},
@@ -51,8 +69,8 @@ window.db = {
 						names: ['en33'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
+						totalCount: 2,
 					},
-					totalCount: 2,
 				},
 				{
 					type: "WaitSecond",
@@ -66,8 +84,8 @@ window.db = {
 						names: ['en44'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
+						totalCount: 2,
 					},
-					totalCount: 2,
 				},
 				{
 					type: "WaitSecond",
@@ -81,8 +99,8 @@ window.db = {
 						names: ['en33'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
+						totalCount: 2,
 					},
-					totalCount: 2,
 				},
 				{
 					type: "WaitSecond",
@@ -96,8 +114,8 @@ window.db = {
 						names: ['en44'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
+						totalCount: 2,
 					},
-					totalCount: 2,
 				},
 			],
 		},

@@ -35,6 +35,9 @@ class NormalEnermyGenner
         {
             let node = cc.instantiate(helper.randSelect(this.assets));
 
+            node.x = helper.randInt(0, 960);
+            node.y = helper.randInt(0, 640);
+
             let comp = node.getComponent('NormalEnermy');
             comp.blood = comp.blood + helper.randInt(this.config.bloodAddRange);
             comp.speed = comp.speed + helper.randInt(this.config.speedAddRange);

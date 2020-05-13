@@ -1,7 +1,7 @@
 // 负责关卡数据的读取
 
 cc.Class({
-    extends: cc.Component,
+    extends: require("LevelMan"),
 
     properties: {
         // 当关卡改变时，向外界发出通知
@@ -31,9 +31,5 @@ cc.Class({
         var weaponman = levelLoader.player.getComponent('WeaponMan');
         var weaponnode = cc.instantiate(this.debugGun);
         weaponman.addMainWeaponNode(weaponnode);
-
-        // var diffshoot = weaponnode.getComponent('DiffShootEmitter');
-        // diffshoot.shootDiff = 200;
     },
-
 });

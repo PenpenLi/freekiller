@@ -41,4 +41,14 @@ cc.Class({
             comps[i].enermyUpdate && comps[i].enermyUpdate(dt);
         }
     },
+
+    getAliveEnermyCount()
+    {
+        return this.enermyLayer.children.length;
+    },
+
+    getNearestNodeAtWorld()
+    {
+        return this.enermyLayer.children[0];
+    },
 });

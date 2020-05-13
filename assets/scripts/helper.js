@@ -61,7 +61,7 @@ class Helper
 
 		var rand = Math.random();
 		rand = rand * (max - min);
-		return Math.round(min+rand);
+		return Math.floor(min+rand);
 	}
 }
 

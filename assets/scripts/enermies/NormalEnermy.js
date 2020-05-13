@@ -39,12 +39,6 @@ cc.Class({
         var moveto = cur.add(step);
         moveto = this.node.parent.convertToNodeSpaceAR(moveto);
     	this.node.position = moveto;
-
-        // this.cnt = this.cnt || 1;
-        // ++this.cnt;
-        // if (this.cnt%10 === 0) {
-            
-        // }
     },
 
     onCollisionEnter(other, self)

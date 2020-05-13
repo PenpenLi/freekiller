@@ -34,11 +34,8 @@ cc.Class({
         this.tilesize = this.displayLayer.getMapTileSize();
         this.mapsize = levelLoader.tiledmap.node.getContentSize();
 
-        cc.log(`tilesize=(${this.tilesize.width}, ${this.tilesize.height})`);
-        cc.log(`mapsize=(${this.mapsize.width}, ${this.mapsize.height})`);
-
-        // this.displayLayer.node.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
-        // this.displayLayer.node.on(cc.Node.EventType.MOUSE_MOVE, this.onMouseMove, this);
+        // cc.log(`tilesize=(${this.tilesize.width}, ${this.tilesize.height})`);
+        // cc.log(`mapsize=(${this.mapsize.width}, ${this.mapsize.height})`);
     },
 
     positionToRC(pos)
