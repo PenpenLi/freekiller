@@ -12,18 +12,22 @@ cc.Class({
     	var rule = db.freeEnermyGeneratorRules[levelman.getCurLevel()] || db.freeEnermyGeneratorDefaultRule;
     	this.rootGenner = helper.create(rule.type);
     	this.rootGenner.init(rule.config);
+
+        // this.stateMan = levelman.getStateMan();
     },
 
     update(dt)
     {
-        if (!this.rootGenner) {
+        if (!this.rootGenner)
             return;
-        }
+
+        // if (this.stateMan.curState != LevelState.Running)
+        //     return;
 
         var res = this.rootGenner.gennerUpdate(dt);
 
         if (res) {
-            this.node.removeComponent(this);
+            this.rootGenner = null;
         }
     },
 

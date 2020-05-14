@@ -5,6 +5,11 @@ cc.Class({
     properties: {
     },
 
+    start()
+    {
+        cc.log('PlayerShoot start');
+    },
+
     onLevelLoaded(levelman) {
         this.playerInfo = levelman.getPlayerNode().getComponent('PlayerInfo');
         this.enermyMan = cc.find('Canvas').getComponent('EnermyMan');

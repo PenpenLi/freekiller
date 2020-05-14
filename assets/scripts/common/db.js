@@ -13,24 +13,6 @@ window.db = {
 						totalCount: 2,
 					},
 				},
-				{
-					type: "WaitZeroEnermy",
-				},
-				{
-					type: "WaitSecond",
-					config: {
-						second: 2,
-					}
-				},
-				{
-					type: "NormalEnermyGenner",
-					config: {
-						names: ['en4'],
-						bloodAddRange: [0, 100],
-						speedAddRange: [0, 0],
-						totalCount: 2,
-					},
-				},
 			],
 			
 		},
@@ -43,7 +25,7 @@ window.db = {
 						names: ['en4'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
-						totalCount: 4,
+						totalCount: 2,
 					},
 				},
 				{
@@ -55,7 +37,7 @@ window.db = {
 						names: ['en4'],
 						bloodAddRange: [0, 100],
 						speedAddRange: [0, 0],
-						totalCount: 8,
+						totalCount: 2,
 					},
 				},
 			],

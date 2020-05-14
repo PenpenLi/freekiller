@@ -96,19 +96,25 @@
         "__id__": 56
       },
       {
+        "__id__": 57
+      },
+      {
+        "__id__": 58
+      },
+      {
+        "__id__": 59
+      },
+      {
+        "__id__": 60
+      },
+      {
+        "__id__": 61
+      },
+      {
         "__id__": 62
       },
       {
         "__id__": 63
-      },
-      {
-        "__id__": 64
-      },
-      {
-        "__id__": 65
-      },
-      {
-        "__id__": 66
       }
     ],
     "_prefab": null,
@@ -1642,7 +1648,7 @@
       "array": [
         0,
         0,
-        402.701812759764,
+        410.49604139382393,
         0,
         0,
         0,
@@ -2199,83 +2205,22 @@
       "__id__": 2
     },
     "_enabled": true,
-    "onLevelLoaded": [
-      {
-        "__id__": 57
-      },
-      {
-        "__id__": 58
-      },
-      {
-        "__id__": 59
-      },
-      {
-        "__id__": 60
-      },
-      {
-        "__id__": 61
-      }
-    ],
     "playerNode": {
       "__id__": 6
     },
     "tiledmapNode": {
       "__id__": 4
     },
+    "centerPlayer": {
+      "__id__": 22
+    },
+    "title": {
+      "__id__": 53
+    },
     "debugGun": {
       "__uuid__": "da0fc167-900a-46ef-9bb6-f0105af98a69"
     },
     "_id": "29g5tAgJxDxLVkn/kWFrZd"
-  },
-  {
-    "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 3
-    },
-    "component": "",
-    "_componentId": "d78cav85rJAxIOTG8sv8WsL",
-    "handler": "onLevelLoaded",
-    "customEventData": ""
-  },
-  {
-    "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 2
-    },
-    "component": "",
-    "_componentId": "d0556WYa75MT5RN0Zjm9w4X",
-    "handler": "onLevelLoaded",
-    "customEventData": ""
-  },
-  {
-    "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 2
-    },
-    "component": "",
-    "_componentId": "7af01Cs8ClM65EL9emStloE",
-    "handler": "onLevelLoaded",
-    "customEventData": ""
-  },
-  {
-    "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 2
-    },
-    "component": "",
-    "_componentId": "46deaDdFG5KvZquJjMIqXBJ",
-    "handler": "onLevelLoaded",
-    "customEventData": ""
-  },
-  {
-    "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 44
-    },
-    "component": "",
-    "_componentId": "ba144FWLPBKzLiR9aeMneVh",
-    "handler": "onLevelLoaded",
-    "customEventData": ""
   },
   {
     "__type__": "d0556WYa75MT5RN0Zjm9w4X",
@@ -2332,5 +2277,25 @@
     },
     "_enabled": true,
     "_id": "36tCC1vCVANJEqhPNwPgJM"
+  },
+  {
+    "__type__": "968f2KGfVNO9K/9FOdvS9qj",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_id": "e7bDXrbWBJno7XiyOT0hsL"
+  },
+  {
+    "__type__": "e14adTQ0WBDV7OmIdXNYOrU",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_id": "c6b0GH6HVAWoaJgLUuRhrk"
   }
 ]

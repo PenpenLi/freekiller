@@ -46,6 +46,9 @@ cc.Class({
     	if (!this.man)
     		return;
 
+        if (this.dead)
+            return;
+
         var comp = other.node.getComponent('CauseDamage');
         if (!comp)
             return;
@@ -55,6 +58,7 @@ cc.Class({
         this.label.string = this.blood;
 
     	if (this.blood <= 0) {
+            this.dead = true;
     		this.man.removeEnermyNode(this.node);
     	}
     },

@@ -16,6 +16,12 @@ cc.Class({
 
     },
 
+    onLevelLoaded(levelMan)
+    {
+        this.bulletLayer.removeAllChildren();
+        this.bullets = [];
+    },
+
     addBulletNode(node) {
         var b = node.getComponent('Bullet');
         b.setBulletMan(this);

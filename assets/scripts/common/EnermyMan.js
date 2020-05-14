@@ -11,6 +11,12 @@ cc.Class({
         enermyLayer: cc.Node,
     },
 
+    onLevelLoaded(levelMan)
+    {
+        this.deadCount = 0;
+        this.enermyLayer.removeAllChildren();
+    },
+
     addEnermyNode(node)
     {
         helper.moveNodeTo(node, this.enermyLayer);
@@ -49,9 +55,26 @@ cc.Class({
         return this.enermyLayer.children.length;
     },
 
-    getNearestNodeAtWorld()
+    getNearestNodeAtWorld(pos)
     {
-        return this.enermyLayer.children[0];
+        var minlen = null;
+        var node = null;
+        var local = this.enermyLayer.convertToNodeSpaceAR(pos);
+        for(let i=0; i<this.enermyLayer.children.length; ++i)
+        {
+            let curlen = this.enermyLayer.children[i].position.sub(local).len();
+            if (minlen === null)
+            {
+                minlen = curlen;
+                node = this.enermyLayer.children[i];
+            }
+            else if (curlen < minlen)
+            {
+                minlen = curlen;
+                node = this.enermyLayer.children[i];
+            }
+        }
+        return node;
     },
 
     getDeadCount()

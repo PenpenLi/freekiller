@@ -4,12 +4,14 @@ cc.Class({
     extends: require("LevelMan"),
 
     properties: {
-        // 当关卡改变时，向外界发出通知
-        onLevelLoaded: [cc.Component.EventHandler],
 
         playerNode: cc.Node,
 
         tiledmapNode: cc.Node,
+
+        centerPlayer: require('CenterPlayer'),
+
+        title: require('FreeTitle'),
 
         debugGun: cc.Prefab,
     },
@@ -25,26 +27,37 @@ cc.Class({
         // cc.director.getCollisionManager().enabledDebugDraw = true;
     },
 
-    gotoNext() {
+    gotoNext()
+    {
         ++this.curLevel;
 
         this.emitLevelLoaded();
     },
 
     loadPlayerWeapon() {
+
+        if (!this.debugGun)
+            return;
+
         var weaponman = this.playerNode.getComponent('WeaponMan');
         var weaponnode = cc.instantiate(this.debugGun);
         weaponman.addMainWeaponNode(weaponnode);
+
+        this.debugGun = null;
     },
 
     emitLevelLoaded()
     {
         this.loadPlayerWeapon();
-        
-        for(let i=0; i<this.onLevelLoaded.length; ++i)
-        {
-            this.onLevelLoaded[i].emit([this]);
-        }
+
+        this.centerPlayer.onLevelLoaded(this);
+        this.getComponent('EnermyMan').onLevelLoaded(this);
+        this.getComponent('FreeEnermyGenner').onLevelLoaded(this);
+        this.getComponent('PlayerMoveControl').onLevelLoaded(this);
+        this.getComponent('PlayerShootControl').onLevelLoaded(this);
+        this.getComponent('FinishCondition').onLevelLoaded(this);
+        this.getComponent('FreeStateMan').onLevelLoaded(this);
+        this.title.onLevelLoaded(this);
     },
 
     getPlayerNode()
@@ -70,5 +83,10 @@ cc.Class({
     getEnermyMan()
     {
         return this.node.getComponent('EnermyMan');
+    },
+
+    getStateMan()
+    {
+        return this.node.getComponent('StateMan');
     },
 });
